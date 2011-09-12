@@ -1,4 +1,4 @@
-=== Akismet ===
+=== QuBic_Idioma ===
 Contributors: marcqueralt
 Tags: multilanguage, network
 Requires at least: 3.1
@@ -19,3 +19,15 @@ Upload the QuBic_Idioma plugin and you're done!
 
 == Changelog ==
 
+=0.2=
+* File structure change
+* Widget Language Chooser
+* Bloc change based on language
+
+=0.3=
+* Pages direct association between languages and blocs
+
+=Next steps=
+* Associar traduccions de posts
+* Associar traduccions de categories
+* Associar traduccions de tags

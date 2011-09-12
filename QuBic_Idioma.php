@@ -7,7 +7,7 @@
   Plugin Name: QuBic_Idioma
   Plugin URI: http://evasans.net/
   Description: QuBic_Idioma allows to have different instances of a blog using different languages on a network installation.
-  Version: 0.1
+  Version: 0.2
   Author: Marc Queralt
   Author URI: http://evasans.net
   License: GPLv2 or later
@@ -31,7 +31,13 @@
 
 define( 'QBC_IDIOMA_VERSION', '0.1' );
 define( 'QBC_IDIOMA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'QBC_IDIOMA_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'QBC_IDIOMA_TEXT_DOMAIN', 'QuBic_Idioma' );
+define( 'QBC_IDIOMA_OPTIONS', 'QuBicIdioma_options' );
+
+require_once QBC_IDIOMA_PLUGIN_PATH . 'functions.php';
+require_once QBC_IDIOMA_PLUGIN_PATH . 'admin.php';
+require_once QBC_IDIOMA_PLUGIN_PATH.'widgets.php';
 
 // Make sure we don't expose any info if called directly
 if ( !function_exists( 'add_action' ) )
@@ -44,7 +50,13 @@ load_plugin_textdomain( QBC_IDIOMA_TEXT_DOMAIN, false, QBC_IDIOMA_PLUGIN_URL . '
 add_action( 'init', 'QuBicIdioma_Register' );
 if ( is_admin() ):
     add_action( 'admin_menu', 'QuBicIdioma_admin' );
+else:
+    wp_enqueue_script( 'QuBic_Idioma_selectmenu', plugin_dir_url( __FILE__ ) . 'jquery.ui.selectmenu.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget' ), '', true );
+    wp_enqueue_script( 'QuBic_Idioma_widgets', plugin_dir_url( __FILE__ ) . 'widgets.js', array( 'QuBic_Idioma_selectmenu' ), '', true );
+    wp_enqueue_style( 'QuBic_Idioma_UI', plugin_dir_url( __FILE__ ) . 'jqueryUI.css', '', '' );
+    wp_enqueue_style( 'QuBic_Idioma_Widgets', plugin_dir_url( __FILE__ ) . 'widgets.css', '', '' );
 endif;
+add_action( 'widgets_init', 'QuBicIdioma_widgets_init' );
 
 /**
  * Plugin registration
@@ -54,69 +66,4 @@ function QuBicIdioma_Register()
 {
     
 }
-
-/**
- * Setup up the settings menu
- * @since 0.1
- */
-function QuBicIdioma_admin()
-{
-    register_setting(
-            'QuBicIdioma_options', 'QuBicIdioma_options', 'QuBicIdioma_admin_validate_options'
-    );
-    add_settings_section(
-            'QuBicIdioma_main', __( 'Idioma', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_main_text', 'QuBicIdioma'
-    );
-    add_settings_field(
-            'QuBicIdioma_literal', __( "Literal d'idioma", QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_literal_input', 'QuBicIdioma', 'QuBicIdioma_main'
-    );
-    add_options_page( __( 'Multi-idioma', QBC_IDIOMA_TEXT_DOMAIN ), __( 'Multi-idioma', QBC_IDIOMA_TEXT_DOMAIN ), 'manage_options', 'QuBicIdioma', 'QuBicIdioma_admin_optionspage' );
-}
-
-/**
- * Admin page creation
- * since: @0.1
- */
-function QuBicIdioma_admin_optionspage()
-{
-    echo '<div class="wrap">';
-    screen_icon();
-    echo '<h2>' . __( 'Multi-idioma', QBC_IDIOMA_TEXT_DOMAIN ) . '</h2>';
-    echo '<form action="options.php" method="post">';
-    settings_fields( 'QuBicIdioma_options' );
-    do_settings_sections( 'QuBicIdioma' );
-    echo '<input name="Submit" type="submit" value="' . __( 'Desar canvis', QBC_IDIOMA_TEXT_DOMAIN ) . '"/>';
-    echo '</form>';
-    echo '</div>';
-}
-
-/**
- * Writes the main section text
- * @since 0.1
- */
-function QuBicIdioma_admin_section_main_text()
-{
-    echo '<p>' . __( "S'estableixen els paràmetres de visualització d'idioma vinculats al bloc actual", QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
-}
-
-/**
- * 
- */
-function QuBicIdioma_admin_literal_input()
-{
-    $options = get_option('QuBicIdioma_options');
-    $literal = $options['literal'];
-    echo '<input id="literal" name="QuBicIdioma_options[literal]" type="text" size="50" value="' . $literal . '"/>';    
-}
-
-/**
- * Plugin settings validation
- * @param array $input options introduced by the user
- * @since 0.1
- */
-function QuBicIdioma_admin_validate_options( $input )
-{
-    $valid = array( );
-    $valid = $input;
-    return $valid;
-}
+?>
