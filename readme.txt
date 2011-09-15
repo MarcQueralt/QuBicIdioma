@@ -25,9 +25,16 @@ Upload the QuBic_Idioma plugin and you're done!
 * Bloc change based on language
 
 =0.3=
-* Pages direct association between languages and blocs
+* Post:
+** Post translation link
+** Link on header to go to other post translations
 
 =Next steps=
 * Associar traduccions de posts
 * Associar traduccions de categories
 * Associar traduccions de tags
+* Associar traduccions d'entrades de menú
+* Associar traduccions de links
+* Mapa d'associacions per a una determinada tipologia d'elements
+* Modificar el generador d'url per a que el títol digui traducció al XXX: títol.
+* Contemplar que hi ha estats dels blocs.
