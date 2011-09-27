@@ -3,6 +3,7 @@
 /**
  * Gets blog and language information sort based on $criteri
  * @since 0.2
+ * updated 0.4 added blog status control.
  * @param string $criteri order field used to sort
  * @return array contains a record for each blog with fields ID,name,address,order
  * @uses QuBicIdioma_obtenir_opcions_bloc
@@ -14,13 +15,15 @@ function QuBicIdioma_obtenir_blocs( $criteri='ordre' )
     $blocs = get_blog_list();
     foreach ( $blocs as $bloc ):
         $opcions = QuBicIdioma_obtenir_opcions_bloc( $bloc['blog_id'] );
+        $detalls = get_blog_details( $bloc['blog_id'] );
         $info[] = array(
             'blog_id' => $bloc['blog_id'],
             'domain' => $bloc['domain'],
             'path' => $bloc['path'],
-            'actiu' => isset( $opcions['literal'] ),
+            'actiu' => (isset( $opcions['literal'] ) && (1 == $detalls->public)),
             'language' => $opcions['literal'],
             'ordre' => isset( $opcions['ordre'] ) ? $opcions['ordre'] : 99,
+            'details' => $detalls,
         );
     endforeach;
     $compare = makeSortFunction( $criteri );
@@ -246,10 +249,10 @@ function QuBicIdioma_obtenir_traduccions( $post_id )
         $traduccio_id = QuBicIdioma_mb_recuperar( $post_id, QuBicIdioma_mb_camp_nom( $bloc['blog_id'] ) );
         if ( $traduccio_id != '' ):
             $nom = QuBicIdioma_obtenir_nom_idioma( $bloc['blog_id'] );
-            switch_to_blog($bloc['blog_id']);
-            $post=get_post($traduccio_id);
+            switch_to_blog( $bloc['blog_id'] );
+            $post = get_post( $traduccio_id );
             $titol = $post->post_title;
-            $url=get_permalink($traduccio_id);
+            $url = get_permalink( $traduccio_id );
             if ( 'publish' == $post->post_status ):
                 $traduccions[] = array(
                     'post_id' => $traduccio_id,
@@ -259,7 +262,7 @@ function QuBicIdioma_obtenir_traduccions( $post_id )
                     'blog_id' => $bloc['blog_id'],
                     'post_id_original' => $post_id,
                     'camp_a_llegir' => QuBicIdioma_mb_camp_nom( $bloc['blog_id'] ),
-                    'post'=> $post,
+                    'post' => $post,
                 );
             endif;
             restore_current_blog();
@@ -296,4 +299,35 @@ function QuBicIdioma_obtenir_altres_blocs_actius()
     return $blocs;
 }
 
+/**
+ * Torna els post types susceptibles de ser traduïts
+ * @return array
+ */
+function QuBicIdioma_obtenir_posts_types_traduibles()
+{
+    $types = get_post_types( array( 'public' => 1 ), 'objects' );
+    $result = $types;
+    return $result;
+}
+/**
+ * Generates the option name based on post_type
+ * @since 0.4
+ * @param string $post_type
+ * @return string 
+ */
+function QuBicIdioma_opcio_tipus_nom( $post_type )
+{
+    return 'post_type_' . $post_type;
+}
+/**
+ * Retrieves QuBicIdioma option
+ * @since 0.4
+ * @param type $nom 
+ */
+function QuBicIdioma_obtenir_posttype_a_traduir($post_type) {
+    $opcions=get_option(QBC_IDIOMA_OPTIONS);
+    $nom_opcio=QuBicIdioma_opcio_tipus_nom($post_type);
+    $result= ('on'==$opcions[$nom_opcio]);
+    return $result;
+}
 ?>

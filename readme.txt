@@ -29,12 +29,16 @@ Upload the QuBic_Idioma plugin and you're done!
 ** Post translation link
 ** Link on header to go to other post translations
 
+=0.4=
+* Settings:
+** Allows to choose the post_types affected by translation
+* Take blog status into account
+
 =Next steps=
-* Associar traduccions de posts
+* Associar traduccions de pàgines
 * Associar traduccions de categories
 * Associar traduccions de tags
 * Associar traduccions d'entrades de menú
 * Associar traduccions de links
 * Mapa d'associacions per a una determinada tipologia d'elements
 * Modificar el generador d'url per a que el títol digui traducció al XXX: títol.
-* Contemplar que hi ha estats dels blocs.

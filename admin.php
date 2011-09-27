@@ -18,6 +18,10 @@ function QuBicIdioma_admin()
             'QuBicIdioma_main', __( 'Idioma', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_main_text', 'QuBicIdioma'
     );
     add_settings_section(
+            'QuBicIdioma_types', __( 'Post Types', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_types_text', 'QuBicIdioma'
+    );
+    QuBicIdioma_admin_camps_tipus();
+    add_settings_section(
             'QuBicIdioma_configuracio', __( 'Confirguració actual', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_config_text', 'QuBicIdioma'
     );
     add_settings_field(
@@ -55,7 +59,8 @@ function QuBicIdioma_admin_optionspage()
  */
 function QuBicIdioma_admin_section_main_text()
 {
-    echo '<p>' . __( "S'estableixen els paràmetres de visualització d'idioma vinculats al bloc actual", QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
+    echo '<p>' . __( "S'hi estableix els paràmetres de visualització d'idioma vinculats al bloc actual.", QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
+    //echo '<pre>' . print_r( QuBicIdioma_obtenir_posts_types_traduibles(), true ) . '</pre>';
 }
 
 /**
@@ -109,6 +114,64 @@ function QuBicIdioma_admin_validate_options( $input )
     $valid = array( );
     $valid = $input;
     return $valid;
+}
+
+/**
+ * @since 0.4
+ */
+function QuBicIdioma_admin_section_types_text()
+{
+    echo '<p>' . __( "S'hi estableix quins post types estan subjectes a traducció.", QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
+}
+
+/**
+ * @since 0.4
+ */
+function QuBicIdioma_admin_camps_tipus()
+{
+    $array = QuBicIdioma_obtenir_posts_types_traduibles();
+    foreach ( $array as $key => $value ):
+        $etiqueta = $value->labels->name;
+        $nom = QuBicIdioma_opcio_tipus_nom( $key );
+        $valor = QuBicIdioma_obtenir_posttype_a_traduir( $key );
+        $args = array(
+            'nom' => $nom,
+            'valor' => $valor,
+        );
+        add_settings_field(
+                'QuBicIdioma_type_' . $key, $etiqueta, 'QuBicIdioma_admin_type_input', 'QuBicIdioma', 'QuBicIdioma_types', $nom, $args
+        );
+    endforeach;
+    {
+        
+    }
+}
+
+/**
+ * Outputs the HTML for the checkbox
+ * @since 0.4
+ * @param type $nom
+ * @param type $valor 
+ */
+function QuBicIdioma_admin_type_input( $nom, $valor=null )
+{
+    if ( isset( $nom ) ):
+        QuBicIdioma_admin_ckeckbox( $nom, $valor );
+    endif;
+}
+
+/**
+ * Prints a checkbox for option typepost field
+ * since 0.4
+ */
+function QuBicIdioma_admin_ckeckbox( $field_name, $field_value )
+{
+    echo '<input type="checkbox" name="';
+    echo QBC_IDIOMA_OPTIONS . '[' . $field_name . ']';
+    echo '" ';
+    $checked=checked( $field_value, 1, false);
+    echo $checked;
+    echo '>';
 }
 
 ?>
