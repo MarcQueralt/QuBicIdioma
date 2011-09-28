@@ -19,9 +19,9 @@ class QuBicIdioma_Chooser_Widget extends WP_Widget
     {
         $widget_ops = array(
             'classname' => 'QuBic_Idioma',
-            'description' => __( "Presenta el selector d'idiomes en forma de select box mitjançant JQuery", QBC_IDIOMA_TEXT_DOMAIN )
+            'description' => __( 'Shows a language selector as an accessible selectbox based in jQuery', QBC_IDIOMA_TEXT_DOMAIN )
         );
-        $this->WP_Widget( 'QuBic_Idioma', __( 'Selector d\'idioma', QBC_IDIOMA_TEXT_DOMAIN ), $widget_ops );
+        $this->WP_Widget( 'QuBic_Idioma', __( 'Language chooser', QBC_IDIOMA_TEXT_DOMAIN ), $widget_ops );
     }
 
     function form( $instance )
@@ -60,13 +60,14 @@ class QuBicIdioma_Chooser_Widget extends WP_Widget
 
 }
 ?>
-<!--
+<?php
 /**
 * Devuelve el sufijo para la selección del idioma por defecto
 * @param mixed $idioma objeto de idioma que devuelve xili-language
 * @param mixed $prefix string que precederá al sufijo
 * @since 20110728
 */
+/*
 private function sufixIdioma( $idioma, $prefix='?' )
 {
 return $prefix . 'lang=' . $idioma->slug;
@@ -128,4 +129,4 @@ wp_enqueue_style( 'selectorIdioma-UI', plugin_dir_url( __FILE__ ) . 'jqueryUI.cs
 wp_enqueue_style( 'selectorIdioma', plugin_dir_url( __FILE__ ) . 'selectmenu.css', '', '' );
 endif;
 add_action( 'widgets_init', create_function( '', "return register_widget('selectorIdioma');" ) );
-*/-->
+*/

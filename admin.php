@@ -15,22 +15,22 @@ function QuBicIdioma_admin()
             'QuBicIdioma_options', 'QuBicIdioma_options', 'QuBicIdioma_admin_validate_options'
     );
     add_settings_section(
-            'QuBicIdioma_main', __( 'Idioma', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_main_text', 'QuBicIdioma'
+            'QuBicIdioma_main', __( 'Language', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_main_text', 'QuBicIdioma'
     );
     add_settings_section(
             'QuBicIdioma_types', __( 'Post Types', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_types_text', 'QuBicIdioma'
     );
     QuBicIdioma_admin_camps_tipus();
     add_settings_section(
-            'QuBicIdioma_configuracio', __( 'Confirguració actual', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_config_text', 'QuBicIdioma'
+            'QuBicIdioma_configuracio', __( 'Current Settings', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_section_config_text', 'QuBicIdioma'
     );
     add_settings_field(
-            'QuBicIdioma_literal', __( "Literal d'idioma", QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_literal_input', 'QuBicIdioma', 'QuBicIdioma_main'
+            'QuBicIdioma_literal', __( 'Language text', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_literal_input', 'QuBicIdioma', 'QuBicIdioma_main'
     );
     add_settings_field(
-            'QuBicIdioma_ordre', __( "Ordre", QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_ordre_input', 'QuBicIdioma', 'QuBicIdioma_main'
+            'QuBicIdioma_ordre', __( 'Order', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_admin_ordre_input', 'QuBicIdioma', 'QuBicIdioma_main'
     );
-    add_options_page( __( 'Multi-idioma', QBC_IDIOMA_TEXT_DOMAIN ), __( 'Multi-idioma', QBC_IDIOMA_TEXT_DOMAIN ), 'manage_options', 'QuBicIdioma', 'QuBicIdioma_admin_optionspage' );
+    add_options_page( __( 'MultiLanguage', QBC_IDIOMA_TEXT_DOMAIN ), __( 'MultiLanguage', QBC_IDIOMA_TEXT_DOMAIN ), 'manage_options', 'QuBicIdioma', 'QuBicIdioma_admin_optionspage' );
 }
 
 /**
@@ -44,11 +44,11 @@ function QuBicIdioma_admin_optionspage()
 {
     echo '<div class="wrap">';
     screen_icon();
-    echo '<h2>' . __( 'Multi-idioma', QBC_IDIOMA_TEXT_DOMAIN ) . '</h2>';
+    echo '<h2>' . __( 'MultiLanguage', QBC_IDIOMA_TEXT_DOMAIN ) . '</h2>';
     echo '<form action="options.php" method="post">';
     settings_fields( 'QuBicIdioma_options' );
     do_settings_sections( 'QuBicIdioma' );
-    echo '<input name="Submit" type="submit" value="' . __( 'Desar canvis', QBC_IDIOMA_TEXT_DOMAIN ) . '"/>';
+    echo '<input name="Submit" type="submit" value="' . __( 'Save Changes', QBC_IDIOMA_TEXT_DOMAIN ) . '"/>';
     echo '</form>';
     echo '</div>';
 }
@@ -59,7 +59,7 @@ function QuBicIdioma_admin_optionspage()
  */
 function QuBicIdioma_admin_section_main_text()
 {
-    echo '<p>' . __( "S'hi estableix els paràmetres de visualització d'idioma vinculats al bloc actual.", QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
+    echo '<p>' . __( "Language settings for current blog.", QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
     //echo '<pre>' . print_r( QuBicIdioma_obtenir_posts_types_traduibles(), true ) . '</pre>';
 }
 
@@ -71,11 +71,11 @@ function QuBicIdioma_admin_section_config_text()
 {
     echo "<p>";
     if ( is_multisite() ):
-        _e( 'Configuració multisite activa.', QBC_IDIOMA_TEXT_DOMAIN );
+        _e( 'Multisite set.', QBC_IDIOMA_TEXT_DOMAIN );
     else:
-        _e( 'Configuració multisite no activa.', QBC_IDIOMA_TEXT_DOMAIN );
+        _e( 'Multisite not set.', QBC_IDIOMA_TEXT_DOMAIN );
         echo '<br/>';
-        _e( 'Activa-la per a que l\'extensió funcioni correctament.', QBC_IDIOMA_TEXT_DOMAIN );
+        _e( 'This plugin needs a network set in order to work.', QBC_IDIOMA_TEXT_DOMAIN );
     endif;
     echo "</p>";
     echo "<p><pre>";
@@ -121,7 +121,7 @@ function QuBicIdioma_admin_validate_options( $input )
  */
 function QuBicIdioma_admin_section_types_text()
 {
-    echo '<p>' . __( "S'hi estableix quins post types estan subjectes a traducció.", QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
+    echo '<p>' . __( "Post types that can be translated.", QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
 }
 
 /**

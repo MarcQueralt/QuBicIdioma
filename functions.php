@@ -95,7 +95,7 @@ function QuBicIdioma_crearURL( $domain, $path )
 function QuBicIdioma_activar_relacions()
 {
     add_meta_box(
-            "QuBicIdioma_relation", __( 'Traduccions', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_mb_relacio', 'post', 'normal', 'default' );
+            "QuBicIdioma_relation", __( 'Translations', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_mb_relacio', 'post', 'normal', 'default' );
 }
 
 /**
@@ -109,7 +109,7 @@ function QuBicIdioma_mb_relacio( $post )
 {
     global $blog_id;
     $llista = QuBicIdioma_obtenir_blocs_actius( $criteri = 'blog_id' );
-    $output = '<p>' . __( 'Permet relacionar el contingut actual amb les seves traduccions', QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
+    $output = '<p>' . __( 'Sets the relationship between the content and its translations', QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
     $output.='<table class="widefat"><tbody>';
     foreach ( $llista as $bloc ):
         $current = QuBicIdioma_mb_recuperar( $post->ID, QuBicIdioma_mb_camp_nom( $bloc['blog_id'] ) );
@@ -157,7 +157,7 @@ function QuBicIdioma_mb_select( $blogid, $current, $type='post' )
                 'order' => 'ASC'
             )
     );
-    $output = '<option value="">' . __( 'Seleccionar un contingut', QBC_IDIOMA_TEXT_DOMAIN ) . '</option>';
+    $output = '<option value="">' . __( 'Select a content', QBC_IDIOMA_TEXT_DOMAIN ) . '</option>';
     foreach ( $llista as $post ):
         $output.='<option value="';
         $output.=$post->ID;

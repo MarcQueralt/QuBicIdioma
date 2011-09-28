@@ -5,11 +5,11 @@
  */
 /*
   Plugin Name: QuBic_Idioma
-  Plugin URI: http://evasans.net/
+  Plugin URI:
   Description: QuBic_Idioma allows to have different instances of a blog using different languages on a network installation.
-  Version: 0.3
-  Author: Marc Queralt
-  Author URI: http://evasans.net
+  Version: 0.4
+  Author: Marc
+  Author URI:  
   License: GPLv2 or later
  */
 
