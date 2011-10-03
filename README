@@ -11,6 +11,8 @@ QuBic_Idioma allows to have different instances of a blog using different langua
 == Description ==
 
 QuBic_Idioma allows to have different instances of a blog using different languages on a network installation.
+It includes a widget to change to initial home page in another language.
+Every post contains a link to any of its translation in an area below the title and content metadata.
 
 == Installation ==
 
@@ -19,7 +21,7 @@ Upload the QuBic_Idioma plugin and you're done!
 
 == Changelog ==
 =0.4=
-* Settings: Allows to choose the post_types affected by translation
+* Settings: Allows to choose the post_types affected by translation. Limited functionality to administration.
 * Take blog status into account
 
 =0.3=
@@ -31,7 +33,11 @@ Upload the QuBic_Idioma plugin and you're done!
 * Widget Language Chooser
 * Bloc change based on language
 
+=0.1=
+* Initial release
+
 =Next steps=
+* Permetre que el selector d'idiomes permeti canviar entre els continguts
 * Associar traduccions de pàgines
 * Associar traduccions de categories
 * Associar traduccions de tags
@@ -39,3 +45,4 @@ Upload the QuBic_Idioma plugin and you're done!
 * Associar traduccions de links
 * Mapa d'associacions per a una determinada tipologia d'elements
 * Modificar el generador d'url per a que el títol digui traducció al XXX: títol.
+* Footer link per a promoció SEO

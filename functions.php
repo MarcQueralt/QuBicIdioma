@@ -9,21 +9,20 @@
  * @uses QuBicIdioma_obtenir_opcions_bloc
  * @uses get_blog_list
  */
-function QuBicIdioma_obtenir_blocs( $criteri='ordre' )
-{
+function QuBicIdioma_obtenir_blocs( $criteri='ordre' ) {
     $info = array( );
     $blocs = get_blog_list();
     foreach ( $blocs as $bloc ):
         $opcions = QuBicIdioma_obtenir_opcions_bloc( $bloc['blog_id'] );
         $detalls = get_blog_details( $bloc['blog_id'] );
         $info[] = array(
-            'blog_id' => $bloc['blog_id'],
-            'domain' => $bloc['domain'],
-            'path' => $bloc['path'],
-            'actiu' => (isset( $opcions['literal'] ) && (1 == $detalls->public)),
-            'language' => $opcions['literal'],
-            'ordre' => isset( $opcions['ordre'] ) ? $opcions['ordre'] : 99,
-            'details' => $detalls,
+                'blog_id' => $bloc['blog_id'],
+                'domain' => $bloc['domain'],
+                'path' => $bloc['path'],
+                'actiu' => (isset( $opcions['literal'] ) && (1 == $detalls->public)),
+                'language' => $opcions['literal'],
+                'ordre' => isset( $opcions['ordre'] ) ? $opcions['ordre'] : 99,
+                'details' => $detalls,
         );
     endforeach;
     $compare = makeSortFunction( $criteri );
@@ -36,8 +35,7 @@ function QuBicIdioma_obtenir_blocs( $criteri='ordre' )
  * @param array $a
  * @return boolean
  */
-function QuBicIdioma_es_bloc_actiu( $a )
-{
+function QuBicIdioma_es_bloc_actiu( $a ) {
     return $a['actiu'];
 }
 
@@ -46,8 +44,7 @@ function QuBicIdioma_es_bloc_actiu( $a )
  * @since 0.2
  * @param string $criteri
  */
-function QuBicIdioma_obtenir_blocs_actius( $criteri='ordre' )
-{
+function QuBicIdioma_obtenir_blocs_actius( $criteri='ordre' ) {
     $info = QuBicIdioma_obtenir_blocs( $criteri );
     $info = array_filter( $info, 'QuBicIdioma_es_bloc_actiu' );
     return $info;
@@ -59,8 +56,7 @@ function QuBicIdioma_obtenir_blocs_actius( $criteri='ordre' )
  * @return function
  * @since 0.2
  */
-function makeSortFunction( $field )
-{
+function makeSortFunction( $field ) {
     $code = "return strnatcmp(\$a['$field'], \$b['$field']);";
     return create_function( '$a,$b', $code );
 }
@@ -69,10 +65,9 @@ function makeSortFunction( $field )
  * Gets blog multiidioma options
  * @since 0.2
  * @param integer $blog_id
- * @return array a record for each of the multilanguage options of the blog 
+ * @return array a record for each of the multilanguage options of the blog
  */
-function QuBicIdioma_obtenir_opcions_bloc( $blog_id )
-{
+function QuBicIdioma_obtenir_opcions_bloc( $blog_id ) {
     return get_blog_option( $blog_id, QBC_IDIOMA_OPTIONS );
 }
 
@@ -82,8 +77,7 @@ function QuBicIdioma_obtenir_opcions_bloc( $blog_id )
  * @param string $path blog's path
  * @return string
  */
-function QuBicIdioma_crearURL( $domain, $path )
-{
+function QuBicIdioma_crearURL( $domain, $path ) {
     return 'http://' . $domain . '/' . $path;
 }
 
@@ -92,8 +86,7 @@ function QuBicIdioma_crearURL( $domain, $path )
  * @since 0.3
  * @uses QuBicIdioma_obtenir_blocs_actius
  */
-function QuBicIdioma_activar_relacions()
-{
+function QuBicIdioma_activar_relacions() {
     add_meta_box(
             "QuBicIdioma_relation", __( 'Translations', QBC_IDIOMA_TEXT_DOMAIN ), 'QuBicIdioma_mb_relacio', 'post', 'normal', 'default' );
 }
@@ -105,8 +98,7 @@ function QuBicIdioma_activar_relacions()
  * @uses QuBicIdioma_obtenir_blocs_actius
  * @uses QuBicIdioma_campmb_nom
  */
-function QuBicIdioma_mb_relacio( $post )
-{
+function QuBicIdioma_mb_relacio( $post ) {
     global $blog_id;
     $llista = QuBicIdioma_obtenir_blocs_actius( $criteri = 'blog_id' );
     $output = '<p>' . __( 'Sets the relationship between the content and its translations', QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
@@ -129,21 +121,19 @@ function QuBicIdioma_mb_relacio( $post )
  * @param integer $blog_id
  * @return string field name for data entry
  */
-function QuBicIdioma_mb_camp_nom( $blog_id )
-{
+function QuBicIdioma_mb_camp_nom( $blog_id ) {
     return QBC_IDIOMA_PREFIX . $blog_id;
 }
 
 /**
  * Generates a select with all the titles of type especified
  * @since 0.3
- * @param integer $blog_id 
+ * @param integer $blog_id
  * @param string $current current value
  * @param string $type post type considered
  * @return string
  */
-function QuBicIdioma_mb_select( $blogid, $current, $type='post' )
-{
+function QuBicIdioma_mb_select( $blogid, $current, $type='post' ) {
     global $blog_id;
     if ( $blog_id == $blogid ):
         return '<option value="" selected="selected">' . __( 'N/A', QBC_IDIOMA_TEXT_DOMAIN ) . '</option>';
@@ -151,10 +141,10 @@ function QuBicIdioma_mb_select( $blogid, $current, $type='post' )
     switch_to_blog( $blogid );
     $llista = get_posts(
             array(
-                'numberposts' => -1,
-                'post_type' => $type,
-                'order_by' => 'post_title',
-                'order' => 'ASC'
+            'numberposts' => -1,
+            'post_type' => $type,
+            'order_by' => 'post_title',
+            'order' => 'ASC'
             )
     );
     $output = '<option value="">' . __( 'Select a content', QBC_IDIOMA_TEXT_DOMAIN ) . '</option>';
@@ -179,32 +169,32 @@ function QuBicIdioma_mb_select( $blogid, $current, $type='post' )
  * @since 0.3
  * @uses get_post_meta
  */
-function QuBicIdioma_mb_recuperar( $post_id, $camp )
-{
+function QuBicIdioma_mb_recuperar( $post_id, $camp ) {
     return get_post_meta( $post_id, $camp, true );
 }
 
 /**
  * Saves relationship information
- * @param integer $post_id 
+ * @param integer $post_id
  * @since 0.3
  */
-function QuBicIdioma_relacions_save_meta( $post_id )
-{
+function QuBicIdioma_relacions_save_meta( $post_id ) {
     $blocs = QuBicIdioma_obtenir_blocs_actius( $criteri = 'blog_id' );
     foreach ( $blocs as $bloc ):
         $camp = QuBicIdioma_mb_camp_nom( $bloc['blog_id'] );
-        update_post_meta( $post_id, $camp, $_POST[$camp] );
+        if(array_key_exists($camp, $_POST)):
+            update_post_meta( $post_id, $camp, $_POST[$camp] );
+        endif;
     endforeach;
 }
 
 /**
  * Print the links in the content
  * @param string $content
- * @return string 
+ * @return string
+ * @since 0.4
  */
-function QuBicIdioma_print_links( $content )
-{
+function QuBicIdioma_print_links( $content ) {
     $links = QuBicIdioma_crearContingutLinks();
     $content = $links . $content;
     return $content;
@@ -214,14 +204,13 @@ function QuBicIdioma_print_links( $content )
  * Prepares links related to the content in other languages in a div
  * @param string class class for the div
  * @return string
+ * @since 0.4
  */
-function QuBicIdioma_crearContingutLinks( $class='QuBicIdioma-top' )
-{
+function QuBicIdioma_crearContingutLinks( $class='QuBicIdioma-top' ) {
     global $post;
     $traduccions = QuBicIdioma_obtenir_traduccions( $post->ID );
     $links = '';
-    foreach ( $traduccions as $traduccio )
-    {
+    foreach ( $traduccions as $traduccio ) {
         $links.='<li>';
         $links.='<a href="';
         $links.=$traduccio['post_url'];
@@ -239,10 +228,10 @@ function QuBicIdioma_crearContingutLinks( $class='QuBicIdioma-top' )
 /**
  * Retrieves an array with all translations of post identified by post_id
  * @param integer $post_id
- * @return array 
+ * @return array
+ * @since 0.4
  */
-function QuBicIdioma_obtenir_traduccions( $post_id )
-{
+function QuBicIdioma_obtenir_traduccions( $post_id ) {
     $llista = QuBicIdioma_obtenir_altres_blocs_actius();
     $traduccions = array( );
     foreach ( $llista as $bloc ):
@@ -255,14 +244,14 @@ function QuBicIdioma_obtenir_traduccions( $post_id )
             $url = get_permalink( $traduccio_id );
             if ( 'publish' == $post->post_status ):
                 $traduccions[] = array(
-                    'post_id' => $traduccio_id,
-                    'post_language' => $nom,
-                    'post_title' => $titol,
-                    'post_url' => $url,
-                    'blog_id' => $bloc['blog_id'],
-                    'post_id_original' => $post_id,
-                    'camp_a_llegir' => QuBicIdioma_mb_camp_nom( $bloc['blog_id'] ),
-                    'post' => $post,
+                        'post_id' => $traduccio_id,
+                        'post_language' => $nom,
+                        'post_title' => $titol,
+                        'post_url' => $url,
+                        'blog_id' => $bloc['blog_id'],
+                        'post_id_original' => $post_id,
+                        'camp_a_llegir' => QuBicIdioma_mb_camp_nom( $bloc['blog_id'] ),
+                        'post' => $post,
                 );
             endif;
             restore_current_blog();
@@ -273,11 +262,10 @@ function QuBicIdioma_obtenir_traduccions( $post_id )
 
 /**
  * Gets language name used in the blog
- * @param integer $blog_id 
+ * @param integer $blog_id
  * @return string
  */
-function QuBicIdioma_obtenir_nom_idioma( $blog_id )
-{
+function QuBicIdioma_obtenir_nom_idioma( $blog_id ) {
     $opcions = QuBicIdioma_obtenir_opcions_bloc( $blog_id );
     return $opcions['literal'];
 }
@@ -286,8 +274,7 @@ function QuBicIdioma_obtenir_nom_idioma( $blog_id )
  * Retrieves all active blocs except the current one
  * @return array
  */
-function QuBicIdioma_obtenir_altres_blocs_actius()
-{
+function QuBicIdioma_obtenir_altres_blocs_actius() {
     global $blog_id;
     $tots = QuBicIdioma_obtenir_blocs_actius();
     $blocs = array( );
@@ -303,8 +290,7 @@ function QuBicIdioma_obtenir_altres_blocs_actius()
  * Torna els post types susceptibles de ser traduïts
  * @return array
  */
-function QuBicIdioma_obtenir_posts_types_traduibles()
-{
+function QuBicIdioma_obtenir_posts_types_traduibles() {
     $types = get_post_types( array( 'public' => 1 ), 'objects' );
     $result = $types;
     return $result;
@@ -313,21 +299,24 @@ function QuBicIdioma_obtenir_posts_types_traduibles()
  * Generates the option name based on post_type
  * @since 0.4
  * @param string $post_type
- * @return string 
+ * @return string
  */
-function QuBicIdioma_opcio_tipus_nom( $post_type )
-{
+function QuBicIdioma_opcio_tipus_nom( $post_type ) {
     return 'post_type_' . $post_type;
 }
 /**
  * Retrieves QuBicIdioma option
  * @since 0.4
- * @param type $nom 
+ * @param type $nom
  */
 function QuBicIdioma_obtenir_posttype_a_traduir($post_type) {
     $opcions=get_option(QBC_IDIOMA_OPTIONS);
     $nom_opcio=QuBicIdioma_opcio_tipus_nom($post_type);
-    $result= ('on'==$opcions[$nom_opcio]);
+    $valor='';
+    if(array_key_exists($nom_opcio, $opcions)):
+        $valor=$opcions[$nom_opcio];
+    endif;
+    $result= ('on'==$valor);
     return $result;
 }
 ?>
