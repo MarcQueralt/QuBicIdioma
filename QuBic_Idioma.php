@@ -7,7 +7,7 @@
   Plugin Name: QuBic_Idioma
   Plugin URI:
   Description: QuBic_Idioma allows to have different instances of a blog using different languages on a network installation.
-  Version: 0.4
+  Version: 0.5
   Author: Marc
   Author URI:  
   License: GPLv2 or later

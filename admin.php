@@ -66,6 +66,7 @@ function QuBicIdioma_admin_section_main_text()
 /**
  * Writes the configuration text
  * @since 0.2
+ * @updated 0.5 simplify output
  */
 function QuBicIdioma_admin_section_config_text()
 {
@@ -78,9 +79,9 @@ function QuBicIdioma_admin_section_config_text()
         _e( 'This plugin needs a network set in order to work.', QBC_IDIOMA_TEXT_DOMAIN );
     endif;
     echo "</p>";
-    echo "<p><pre>";
-    print_r( QuBicIdioma_obtenir_blocs() );
-    echo "</pre></p>";
+//    echo "<p><pre>";
+//    print_r( QuBicIdioma_obtenir_blocs() );
+//    echo "</pre></p>";
 }
 
 /**
@@ -126,6 +127,7 @@ function QuBicIdioma_admin_section_types_text()
 
 /**
  * @since 0.4
+ * @updated 0.5 Adaptation to custom_types
  */
 function QuBicIdioma_admin_camps_tipus()
 {
@@ -139,7 +141,7 @@ function QuBicIdioma_admin_camps_tipus()
             'valor' => $valor,
         );
         add_settings_field(
-                'QuBicIdioma_type_' . $key, $etiqueta, 'QuBicIdioma_admin_type_input', 'QuBicIdioma', 'QuBicIdioma_types', $nom, $args
+                'QuBicIdioma_type_' . $key, $etiqueta, 'QuBicIdioma_admin_type_input', 'QuBicIdioma', 'QuBicIdioma_types', $args
         );
     endforeach;
     {
@@ -150,13 +152,16 @@ function QuBicIdioma_admin_camps_tipus()
 /**
  * Outputs the HTML for the checkbox
  * @since 0.4
- * @param type $nom
- * @param type $valor 
+ * @updated 0.5 Change on parameter structure
+ * @uses QuBicIdioma_admin_check
  */
-function QuBicIdioma_admin_type_input( $nom, $valor=null )
+function QuBicIdioma_admin_type_input( $args )
 {
-    if ( isset( $nom ) ):
-        QuBicIdioma_admin_ckeckbox( $nom, $valor );
+    if ( isset( $args['nom'] ) ):
+        if(!isset($args['valor'])):
+            $args['valor']=0;
+        endif;
+        QuBicIdioma_admin_ckeckbox( $args['nom'], $args['valor'] );
     endif;
 }
 

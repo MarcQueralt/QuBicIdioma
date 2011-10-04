@@ -20,6 +20,11 @@ Upload the QuBic_Idioma plugin and you're done!
 
 
 == Changelog ==
+=0.5=
+* Page: Add fields to translation allowing to link to other translations of pages.
+* Custom posts: Add fields to translations
+* Take into account post types settings on links
+
 =0.4=
 * Settings: Allows to choose the post_types affected by translation. Limited functionality to administration.
 * Take blog status into account
@@ -38,7 +43,6 @@ Upload the QuBic_Idioma plugin and you're done!
 
 =Next steps=
 * Permetre que el selector d'idiomes permeti canviar entre els continguts
-* Associar traduccions de pàgines
 * Associar traduccions de categories
 * Associar traduccions de tags
 * Associar traduccions d'entrades de menú
