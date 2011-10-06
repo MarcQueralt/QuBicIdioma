@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: QuBic_Idioma v0.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-09-28 17:15+0000\n"
+"Last-Translator: marc@dabadisseny.com\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Catalan\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: admin.php:18
+#@ QuBic_Idioma
+msgid "Language"
+msgstr "Llengua"
+
+#: admin.php:21
+#@ QuBic_Idioma
+msgid "Post Types"
+msgstr "Tipus de post"
+
+#: admin.php:25
+#@ QuBic_Idioma
+msgid "Current Settings"
+msgstr "Configuració actual"
+
+#: admin.php:28
+#@ QuBic_Idioma
+msgid "Language text"
+msgstr "Nom de la llengua"
+
+#: admin.php:31
+#@ QuBic_Idioma
+msgid "Order"
+msgstr "Ordre"
+
+#: admin.php:33
+#: admin.php:47
+#@ QuBic_Idioma
+msgid "MultiLanguage"
+msgstr "MultiIdioma"
+
+#: admin.php:51
+#@ QuBic_Idioma
+msgid "Save Changes"
+msgstr "Desa els canvis"
+
+#: functions.php:152
+#@ QuBic_Idioma
+msgid "N/A"
+msgstr "N/A"
+
+#: admin.php:62
+#@ QuBic_Idioma
+msgid "Language settings for current blog."
+msgstr "Configuració de llengua pel bloc actual."
+
+#: admin.php:75
+#@ QuBic_Idioma
+msgid "Multisite set."
+msgstr "Configuració Multi Site activa."
+
+#: admin.php:77
+#@ QuBic_Idioma
+msgid "Multisite not set."
+msgstr "Configuració Multi Site no activa."
+
+#: admin.php:79
+#@ QuBic_Idioma
+msgid "This plugin needs a network set in order to work."
+msgstr "Aquesta extensió necessita un multisite configurat per a funcionar."
+
+#: admin.php:125
+#@ QuBic_Idioma
+msgid "Post types that can be translated."
+msgstr "Tipus d'entrades que poden ésser traduïdes."
+
+#: functions.php:95
+#@ QuBic_Idioma
+msgid "Translations"
+msgstr "Traduccions"
+
+#: functions.php:112
+#@ QuBic_Idioma
+msgid "You can set the relationship between the content and its translations."
+msgstr "Permet establir la correspondència entre els continguts i les seves traduccions."
+
+#: functions.php:124
+#@ QuBic_Idioma
+msgid "Reciprocal update?"
+msgstr "Actualització recíproca?"
+
+#: functions.php:126
+#@ QuBic_Idioma
+msgid "If you select this option, all refered translations will be also linked to the current one. You would not need to update the relationship in other blogs."
+msgstr "Si seleccioneu aquesta opció, totes les traduccions aquí referides s'actualitzaran per a que es vinculin entre elles. No caldrà que accedeixis als altres blocs per actualitzar les actualitzacions."
+
+#: functions.php:163
+#@ QuBic_Idioma
+msgid "No translation"
+msgstr "Sense traducció"
+
+#: widgets.php:22
+#@ QuBic_Idioma
+msgid "Shows a language selector as an accessible selectbox based in jQuery"
+msgstr "Mostra un selector d'idioma com una llista desplegable accessible basada en jQuery"
+
+#: widgets.php:24
+#@ QuBic_Idioma
+msgid "Language chooser"
+msgstr "Selector d'idioma"
+

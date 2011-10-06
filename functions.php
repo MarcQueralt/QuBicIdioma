@@ -104,22 +104,26 @@ function QuBicIdioma_activar_relacions() {
  * @uses QuBicIdioma_camp_mb_nom
  * @uses QuBicIdioma_mb_select
  * @updated 0.5 addition of $post->post_type when calling QuBicIdioma_mb_select
+ * @updated 0.6 addition of reciprocal update and changes due to update of QuBicIdioma_mb_select
  */
 function QuBicIdioma_mb_relacio( $post ) {
     global $blog_id;
     $llista = QuBicIdioma_obtenir_blocs_actius( $criteri = 'blog_id' );
-    $output = '<p>' . __( 'Sets the relationship between the content and its translations', QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
+    $output = '<p>' . __( 'You can set the relationship between the content and its translations.', QBC_IDIOMA_TEXT_DOMAIN ) . '</p>';
     $output.='<table class="widefat"><tbody>';
     foreach ( $llista as $bloc ):
         $current = QuBicIdioma_mb_recuperar( $post->ID, QuBicIdioma_mb_camp_nom( $bloc['blog_id'] ) );
         $output.= '<tr><td>';
         $output.='<label for="' . QuBicIdioma_mb_camp_nom( $bloc['blog_id'] ) . '">' . $bloc['language'] . ':</label>';
         $output.='</td><td><select name="' . QuBicIdioma_mb_camp_nom( $bloc['blog_id'] ) . '">';
-        $output.=QuBicIdioma_mb_select( $bloc['blog_id'], $current,$post->post_type );
+        $output.=QuBicIdioma_mb_select( $bloc['blog_id'], $current,$post->ID, $post->post_type );
         $output.= '</select>';
         $output.= '</td></tr>';
     endforeach;
-    $output.='</tbody></table>';
+    $output .= '</tbody></table>';
+    $output .= '<p><label for="QuBicIdiomaReciprocal">'.__('Reciprocal update?', QBC_IDIOMA_TEXT_DOMAIN).'</label>';
+    $output .= '<input type="checkbox" name="QuBicIdiomaReciprocal"/>';
+    $output .= '<span class="description">'.__('If you select this option, all refered translations will be also linked to the current one. You would not need to update the relationship in other blogs.',QBC_IDIOMA_TEXT_DOMAIN).'</span></p>';
     echo $output;
 }
 
@@ -138,12 +142,14 @@ function QuBicIdioma_mb_camp_nom( $blog_id ) {
  * @param integer $blog_id
  * @param string $current current value
  * @param string $type post type considered
+ * @updated 0.6 to add additional parameter $post_id and to force it as the value for current language
+ * @param string $post_id current post id
  * @return string
  */
-function QuBicIdioma_mb_select( $blogid, $current, $type='post' ) {
+function QuBicIdioma_mb_select( $blogid, $current, $post_id, $type='post' ) {
     global $blog_id;
     if ( $blog_id == $blogid ):
-        return '<option value="" selected="selected">' . __( 'N/A', QBC_IDIOMA_TEXT_DOMAIN ) . '</option>';
+        return '<option value="'.$post_id.'" selected="selected">' . __( 'N/A', QBC_IDIOMA_TEXT_DOMAIN ) . '</option>';
     endif;
     switch_to_blog( $blogid );
     $llista = get_posts(
@@ -154,7 +160,7 @@ function QuBicIdioma_mb_select( $blogid, $current, $type='post' ) {
             'order' => 'ASC'
             )
     );
-    $output = '<option value="">' . __( 'Select a content', QBC_IDIOMA_TEXT_DOMAIN ) . '</option>';
+    $output = '<option value="">' . __( 'No translation', QBC_IDIOMA_TEXT_DOMAIN ) . '</option>';
     foreach ( $llista as $post ):
         $output.='<option value="';
         $output.=$post->ID;
@@ -184,8 +190,12 @@ function QuBicIdioma_mb_recuperar( $post_id, $camp ) {
  * Saves relationship information
  * @param integer $post_id
  * @since 0.3
+ * @uses QuBicIdioma_obtenir_blocs_actius
+ * @updated 0.6 reciprocal update
+ * @uses QuBicIdioma_reciprocal_update
  */
 function QuBicIdioma_relacions_save_meta( $post_id ) {
+    global $blog_id;
     $blocs = QuBicIdioma_obtenir_blocs_actius( $criteri = 'blog_id' );
     foreach ( $blocs as $bloc ):
         $camp = QuBicIdioma_mb_camp_nom( $bloc['blog_id'] );
@@ -193,6 +203,7 @@ function QuBicIdioma_relacions_save_meta( $post_id ) {
             update_post_meta( $post_id, $camp, $_POST[$camp] );
         endif;
     endforeach;
+    QuBicIdioma_reciprocal_update($post_id);
 }
 
 /**
@@ -213,11 +224,12 @@ function QuBicIdioma_print_links( $content ) {
  * @return string
  * @since 0.4
  * @updated 0.5 Takes into account if type is actively translated
+ * @updated 0.6 CSS class change
  */
-function QuBicIdioma_crearContingutLinks( $class='QuBicIdioma-top' ) {
+function QuBicIdioma_crearContingutLinks( $class='QuBicIdioma-post-translations' ) {
     global $post;
     if(!QuBicIdioma_obtenir_posttype_a_traduir($post->post_type)):
-            return '';
+        return '';
     endif;
     $traduccions = QuBicIdioma_obtenir_traduccions( $post->ID );
     $links = '';
@@ -344,5 +356,36 @@ function QuBicIdioma_obtenir_tipus_traduibles() {
         endif;
     endforeach;
     return $result;
+}
+/**
+ * Updates the relationship on the blog identified by $bloc_id with info on $_POST
+ * @param integer $post_id
+ */
+function QuBicIdioma_reciprocal_update($post_id) {
+    global $blog_id;
+    $post=get_post($post_id);
+    if(isset($_POST['QuBicIdiomaReciprocal'])):
+        $traduccions=array();
+        $blocs=QuBicIdioma_obtenir_blocs($criteri='blog_id');
+        foreach ($blocs as $b):
+            $camp=QuBicIdioma_mb_camp_nom($b['blog_id']);
+            if(isset($_POST[$camp])):
+                $valor=$_POST[$camp];
+            else:
+                $valor='';
+            endif;
+            $traduccions[$b['blog_id']]=$valor;
+        endforeach;
+        foreach ($blocs as $b):
+            if($blog_id!=$b['blog_id']):
+                switch_to_blog($b['blog_id']);
+                foreach($traduccions as $key => $nou_post):
+                    $camp=QuBicIdioma_mb_camp_nom($key);
+                    update_post_meta($traduccions[$b['blog_id']],$camp,$nou_post);
+                endforeach;
+                restore_current_blog();
+            endif;
+        endforeach;
+    endif;
 }
 ?>

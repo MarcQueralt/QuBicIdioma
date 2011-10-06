@@ -20,6 +20,10 @@ Upload the QuBic_Idioma plugin and you're done!
 
 
 == Changelog ==
+=0.6=
+* Set reciprocal translations. From one bloc you can update all translations relationships. It assumes that the user is allowed to do all operations.
+* Rename of links div in post
+
 =0.5=
 * Page: Add fields to translation allowing to link to other translations of pages.
 * Custom posts: Add fields to translations
