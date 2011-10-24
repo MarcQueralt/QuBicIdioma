@@ -46,7 +46,7 @@ Upload the QuBic_Idioma plugin and you're done!
 * Initial release
 
 =Next steps=
-* Permetre que el selector d'idiomes permeti canviar entre els continguts
+* Afegir un enllaç a la taula de translations per tal d'anar a la pàgina d'edició del post en una altre bloc.
 * Associar traduccions de categories
 * Associar traduccions de tags
 * Associar traduccions d'entrades de menú
